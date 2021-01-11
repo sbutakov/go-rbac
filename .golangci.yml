@@ -1,0 +1,67 @@
+linters:
+  enable-all: true
+  disable:
+    - errcheck
+    - interfacer # https://github.com/golangci/interfacer is deprecated because of too many false suggestions.
+    - wsl
+    # Enforcing external-only tests would affect coverage, also see
+    # https://dave.cheney.net/practical-go/presentations/gophercon-singapore-2019.html#_prefer_internal_tests_to_external_tests.
+    - testpackage
+    - gofumpt
+    - exhaustivestruct
+    - goerr113
+    - nlreturn
+    - gci
+    - wrapcheck
+linters-settings:
+  govet:
+    check-shadowing: true
+  golint:
+    min-confidence: 0
+  gocyclo:
+    min-complexity: 15
+  maligned:
+    suggest-new: true
+  dupl:
+    threshold: 100
+  goconst:
+    min-len: 2
+    min-occurrences: 2
+  lll:
+    line-length: 140
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - goerr113
+        - goconst
+        - scopelint # To avoid warnings in table-driven tests combined with t.Run
+        - gochecknoglobals
+        - funlen
+        - paralleltest
+  exclude-use-default: false
+  exclude:
+    # golint: Package comment check for every file
+    - should have a package comment, unless
+
+    # govet: Common false positives
+    - (possible misuse of unsafe.Pointer|should have signature)
+
+    # gosec: Too many false-positives on 'unsafe' usage
+    - Use of unsafe calls should be audited
+
+    # gosec: Too many false-positives for parametrized shell calls
+    - Subprocess launch(ed with variable|ing should be audited)
+
+    # gosec: Duplicated errcheck checks
+    - G104
+
+    # gosec: Too many issues in popular repos
+    - (Expect directory permissions to be 0750 or less|Expect file permissions to be 0600 or less)
+
+    # gosec: False positive is triggered by 'src, err := ioutil.ReadFile(filename)'
+    - Potential file inclusion via variable
+
+    # gochecknoglobals: allow version variable
+    - "`version` is a global variable"
