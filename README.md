@@ -1,3 +1,3 @@
 # Golang RBAC library.
 
-[![Build Status](https://travis-ci.org/sbutakov/go-rbac.svg?branch=main)](https://travis-ci.org/sbutakov/go-rbac)
+[![Build Status](https://www.travis-ci.com/sbutakov/go-rbac.svg?branch=main)](https://www.travis-ci.com/sbutakov/go-rbac)
