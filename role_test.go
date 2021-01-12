@@ -17,6 +17,14 @@ func TestNewRole(t *testing.T) {
 		}
 	})
 
+	t.Run("EmptyName", func(t *testing.T) {
+		r, err := NewRole("")
+		if assert.NotNil(t, err) {
+			assert.Contains(t, err.Error(), "empty role name")
+		}
+		assert.Nil(t, r)
+	})
+
 	t.Run("Configured", func(t *testing.T) {
 		resource := bytes.NewBufferString("lib")
 		r, err := NewRole("admin", WithResource(resource, AccessNone))
@@ -52,7 +60,7 @@ func TestNewRole(t *testing.T) {
 func TestRole_CanAccess(t *testing.T) {
 	resource := bytes.NewBufferString("lib")
 	t.Run("ResourceNotFound", func(t *testing.T) {
-		r, err := NewRole("", WithResource(resource, AccessDelete))
+		r, err := NewRole("admin", WithResource(resource, AccessDelete))
 		assert.Nil(t, err)
 		if assert.NotNil(t, r) {
 			res := bytes.NewBufferString("lib-v2")
@@ -63,7 +71,7 @@ func TestRole_CanAccess(t *testing.T) {
 	})
 
 	t.Run("None", func(t *testing.T) {
-		r, err := NewRole("", WithResource(resource, AccessNone))
+		r, err := NewRole("admin", WithResource(resource, AccessNone))
 		assert.Nil(t, err)
 		if assert.NotNil(t, r) {
 			assert.False(t, r.CanAccess(resource, MinAccessLevel(AccessRead)))
@@ -73,7 +81,7 @@ func TestRole_CanAccess(t *testing.T) {
 	})
 
 	t.Run("Read", func(t *testing.T) {
-		r, err := NewRole("", WithResource(resource, AccessRead))
+		r, err := NewRole("admin", WithResource(resource, AccessRead))
 		assert.Nil(t, err)
 		if assert.NotNil(t, r) {
 			assert.True(t, r.CanAccess(resource, MinAccessLevel(AccessRead)))
@@ -83,7 +91,7 @@ func TestRole_CanAccess(t *testing.T) {
 	})
 
 	t.Run("Modify", func(t *testing.T) {
-		r, err := NewRole("", WithResource(resource, AccessModify))
+		r, err := NewRole("admin", WithResource(resource, AccessModify))
 		assert.Nil(t, err)
 		if assert.NotNil(t, r) {
 			assert.True(t, r.CanAccess(resource, MinAccessLevel(AccessRead)))
@@ -93,7 +101,7 @@ func TestRole_CanAccess(t *testing.T) {
 	})
 
 	t.Run("Delete", func(t *testing.T) {
-		r, err := NewRole("", WithResource(resource, AccessDelete))
+		r, err := NewRole("admin", WithResource(resource, AccessDelete))
 		assert.Nil(t, err)
 		if assert.NotNil(t, r) {
 			assert.True(t, r.CanAccess(resource, MinAccessLevel(AccessRead)))
