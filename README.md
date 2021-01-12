@@ -5,12 +5,6 @@
 
 RBAC is an approach to control access based on roles. Roles allow access to resources with a defined access level. This golang library provides methods to manage roles with access levels to protect resources.
 
-## Install
-
-```bash
-go get -u github.com/sbutakov/go-rbac
-```
-
 ## Access level
 
 The access mask manages access control. Mask is presented as an unsigned 8-bit value. There are a few access levels ordered by privilege levels, e.g., the most significant access level `AccessDelete` inherits the lower access levels' access level.
@@ -21,6 +15,24 @@ The following is a list of access levels:
 * `AccessRead` – allows access to read.
 * `AccessModify` – allows access to read and modify.
 * `AccessDelete` – allows access to read, modify and delete.
+
+## Install
+
+```bash
+go get -u github.com/sbutakov/go-rbac
+```
+
+## Run linter
+
+```bash
+make lint
+```
+
+## Run tests
+
+```bash
+make test
+```
 
 ## Example
 
