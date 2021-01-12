@@ -7,7 +7,7 @@ RBAC is an approach to control access based on roles. Roles allow access to reso
 
 ## Access level
 
-The access mask manages access control. Mask is presented as an unsigned 8-bit value. There are a few access levels ordered by privilege levels, e.g., the most significant access level `AccessDelete` inherits the lower access levels' access level.
+The access mask manages access control. Mask is presented as an unsigned 8-bit value. There are a few access levels ordered by privilege levels, e.g., the most significant access level `AccessDelete` inherits the lower access level.
 
 The following is a list of access levels:
 
