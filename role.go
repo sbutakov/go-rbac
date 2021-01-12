@@ -1,6 +1,7 @@
 package rbac
 
 import (
+	"errors"
 	"fmt"
 	"math/bits"
 )
@@ -16,6 +17,10 @@ type Role struct {
 
 // NewRole constructs a role.
 func NewRole(name string, options ...Option) (*Role, error) {
+	if name == "" {
+		return nil, errors.New("empty role name")
+	}
+
 	r := &Role{
 		name:      name,
 		resources: make(map[Resource]AccessLevel),
